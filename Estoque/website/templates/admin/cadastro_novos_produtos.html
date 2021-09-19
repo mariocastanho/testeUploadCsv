@@ -1,0 +1,124 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static "website/css/bootstrap.css" %}">
+<script type="text/javascript" src="{% static "website/js/jquery-3.6.0.js" %}"></script>
+<style>
+    .container {
+        max-width: 710px;
+
+    }
+
+    body {
+        color: rgb(170, 170, 170);
+        background-color: black;
+    }
+    .botao:hover {
+        background-color: rgb(102, 102, 102);
+    }
+
+    a:link, a, a:visited {
+        color: white;
+        text-decoration: none;
+    }
+    .botao{
+        display: block;
+        float: left;
+        padding: 3px 12px;
+        padding-right: 12px;
+        background: var(--object-tools-bg);
+        color: rgb(200, 200, 200);
+        font-weight: 400;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-radius: 15px;
+        line-height: 20px;
+        border-width: 0;
+    }
+    
+    .mensagem {
+        background-color: rgb(30, 30, 30);
+        padding: 10px;
+        border-radius: 15px;
+        margin-bottom: 15px;
+        color: rgb(150, 150, 150);
+        letter-spacing: 0.5px;
+    }
+
+    h3 {
+        margin-bottom: 15px;
+        color: rgb(250, 200, 120);
+    }
+</style>
+
+<div class="container">
+    <div class="mensagem">
+        <h3>Novos Produtos:</h3>
+        <p>
+            Você foi direcionado(a) para esta página pois no arquivo css que tentou importar há 
+            produtos que não estão cadastrados.
+        </p>
+        <p>
+            Cadastre-os para poder prosseguir em seguida com a importação do estoque.
+        </p>
+    </div>
+
+    <form method="">
+        <table id="form_produtos_novos">
+            <tr><th>Produto</th><th>Preço de Venda (R$)</th><th>Descrição</th></tr>
+            {% for produto in produtos %}
+                <tr>
+                    <td><input type="text" value="{{ produto }}" id="produto{{ forloop.counter }}"></td>
+                    <td><input type="number" step="0.01" id="preco{{ forloop.counter }}"></td>
+                    <td><input type="text" id="descricao{{ forloop.counter }}"></td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <!--<button type="submit" class="botao">Cadastrar Produtos</button>-->
+    </form>
+    <a class="botao" id="btn_cadastrar_produtos" href="#">Cadastrar produtos</a>
+    <br>
+    <div id="teste"></div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $.ajaxSetup({
+            headers: { "X-CSRFToken": getCookie("csrftoken") }
+        });
+    });
+    
+    function preenche_array() {
+        let array_produtos = [];
+        for (let i = 1; i < 1000; i++) {
+            id_produto = "produto" + i;
+            id_preco = "preco" + i;
+            id_descricao = "descricao" + i;
+            if(!!document.getElementById(id_produto)) {
+                produto = document.getElementById(id_produto).value;
+                preco = document.getElementById(id_preco).value;
+                descricao = document.getElementById(id_descricao).value;
+                array_produtos.push([produto, preco, descricao]);
+            } else {
+                break;
+            }
+        }
+        return array_produtos;
+    }
+
+    $("#btn_cadastrar_produtos").click(function() {
+        var array_produtos = preenche_array();
+        $.ajax({
+            type: 'POST',
+            url: '/admin/website/produto/cadastro-novos-produtos/',
+            data: {
+                'array_produtos[]': array_produtos,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+        });
+    });
+
+</script>
+{% endblock %}

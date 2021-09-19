@@ -1,0 +1,40 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+
+<style>
+
+    body, h3 {
+        color: rgb(170, 170, 170);
+    }
+    .botao:hover {
+        background-color: rgb(102, 102, 102);
+    }
+    .botao {
+        display: block;
+        float: left;
+        padding: 3px 12px;
+        padding-right: 12px;
+        background: var(--object-tools-bg);
+        color: rgb(200, 200, 200);
+        font-weight: 400;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-radius: 15px;
+        line-height: 20px;
+        border-width: 0;
+    }
+    
+    
+</style>
+
+<div>
+    <form action="." method="POST" enctype="multipart/form-data">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit" class="botao">Upload arquivo</button>
+    </form>
+</div>
+
+{% endblock %}

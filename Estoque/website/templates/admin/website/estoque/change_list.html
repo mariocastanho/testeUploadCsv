@@ -1,0 +1,40 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .botao_upload:hover {
+        background-color: rgb(102, 102, 102);
+        color: white;
+        text-decoration: none;
+    }
+    
+    a:link, a, a:visited {
+        color: white;
+        text-decoration: none;
+    }
+    
+    .botao_upload {
+        display: block;
+        float: left;
+        padding: 3px 12px;
+        padding-right: 12px;
+        background: var(--object-tools-bg);
+        color: white;
+        text-decoration: none;
+        font-weight: 400;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-radius: 15px;
+        line-height: 20px;
+    }
+    
+    
+</style>
+
+<a class="botao_upload" href="upload-csv/">Upload por arquivo csv</a>
+
+{{ block.super }}
+
+{% endblock %}
