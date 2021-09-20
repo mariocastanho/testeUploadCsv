@@ -117,6 +117,11 @@
                 'array_produtos[]': array_produtos,
                 'csrfmiddlewaretoken': '{{ csrf_token }}'
             },
+            success:function(){
+                // Simulate an HTTP redirect: teste
+                window.location.replace("http://www.w3schools.com");
+            },
+            dataType: String
         });
     });
 
