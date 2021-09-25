@@ -117,6 +117,12 @@
                 'array_produtos[]': array_produtos,
                 'csrfmiddlewaretoken': '{{ csrf_token }}'
             },
+            success: function(data){
+                if (data["HTTPRESPONSE"] == "1")
+                {
+                    window.location.href = "/admin/website/produto/";
+                }
+            }
         });
     });
 
