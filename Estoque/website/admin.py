@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib import admin
 from django import forms
 from django.http import HttpResponse
+from django.http import JsonResponse
 
 # Register your models here.
 
@@ -79,6 +80,7 @@ class ProdutoAdmin(admin.ModelAdmin):
                             preco_venda = a[1],
                             descricao = a[2],                    
                         )
+                return JsonResponse({'HTTPRESPONSE':1})
 
 admin.site.register(Estoque, EstoqueAdmin)
 admin.site.register(Produto, ProdutoAdmin)
